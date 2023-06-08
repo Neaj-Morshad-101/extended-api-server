@@ -45,6 +45,7 @@ listening on 127.0.0.2:8443
 ## Terminal 2
 `$ cd cd /tmp/extended-api-server/`
 `$ curl -k https://${APISERVER_ADDR}/core/pods`
+
 Resource: pods
 
 `$ curl -k https://${APISERVER_ADDR}/database/postgres`
