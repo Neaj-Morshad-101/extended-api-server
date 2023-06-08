@@ -63,13 +63,13 @@ Resource: postgres requested by user[X-Remote-User]=john
 $ curl https://${EAS_ADDR}/database/postgres \
 --cacert ./database-ca.crt \
 --cert ./apiserver-john.crt \
---key ./apiserver-john.key`
+--key ./apiserver-john.key
 Resource: postgres requested by user[Client-Cert-CN]=john
 
 $ curl https://${EAS_ADDR}/database/postgres \
 --cacert ./database-ca.crt \
 --cert ./database-jane.crt \
---key ./database-jane.key`
+--key ./database-jane.key
 curl: (35) error:14094412:SSL routines:ssl3_read_bytes:sslv3 alert bad certificate
 
 $ curl -k https://${EAS_ADDR}/database/postgres
