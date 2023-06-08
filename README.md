@@ -5,23 +5,25 @@
 
 -------------------------------------
 
-# Terminal 1
+
+## Terminal 1
 $ go run apiserver/main.go
 listening on 127.0.0.1:8443
 
-# Terminal 2
+## Terminal 2
 export APISERVER_ADDR=127.0.0.1:8443
 
 $ curl -k https://${APISERVER_ADDR}/core/pods
 Resource: pods
 
+
 -------------------------------------
 
-# Terminal 3
+## Terminal 3
 $ go run database-apiserver/main.go
 listening on 127.0.0.2:8443
 
-# Terminal 2
+## Terminal 2
 export EAS_ADDR=127.0.0.2:8443
 
 $ curl -k https://${EAS_ADDR}/database/postgres
