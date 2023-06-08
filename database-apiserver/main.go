@@ -57,7 +57,7 @@ func main() {
 
 	// ---------------------------------
 
-	apiserverStore, err := certstore.NewCertStore(fs, "tmp/extended-api-server")
+	apiserverStore, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"k8s.io/klog/v2"
 	"log"
 	"net"
 	"net/http"
@@ -30,26 +31,33 @@ func main() {
 	fs := afero.NewOsFs()
 	store, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
+		log.Println("Line 34")
 	}
 	err = store.InitCA("apiserver")
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
+		log.Println("Line")
 	}
 	serverCert, serverKey, err := store.NewServerCertPair(cert.AltNames{
 		IPs: []net.IP{net.ParseIP("127.0.0.1")},
 	})
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 	err = store.Write("tls", serverCert, serverKey)
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 	clientCert, clientKey, err := store.NewClientCertPair(cert.AltNames{
 		DNSNames: []string{"john"},
 	})
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 	err = store.Write("john", clientCert, clientKey)
@@ -60,10 +68,12 @@ func main() {
 	// ---------------------------------------------------------
 	rhStore, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 	err = rhStore.InitCA("requestheader")
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 
@@ -72,18 +82,21 @@ func main() {
 	})
 
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 
 	err = rhStore.Write("apiserver", rhClientCert, rhClientKey)
 
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 
 	rhCert, err := tls.LoadX509KeyPair(rhStore.CertFile("apiserver"), rhStore.KeyFile("apiserver"))
 
 	if err != nil {
+		klog.Info()
 		log.Fatalln(err)
 	}
 	// ---------------------------------
@@ -92,13 +105,13 @@ func main() {
 	easCACertPool := x509.NewCertPool()
 
 	if proxy {
-		easStore, err := certstore.NewCertStore(fs, "tmp/extended-api-server")
+		easStore, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
 		if err != nil {
-			log.Fatalln(err)
+			klog.Info(err)
 		}
 		err = easStore.LoadCA("database")
 		if err != nil {
-			log.Fatalln(err)
+			klog.Info(err)
 		}
 
 		easCACertPool.AppendCertsFromPEM(easStore.CACertBytes())

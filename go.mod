@@ -10,4 +10,9 @@ require (
 	k8s.io/client-go v9.0.0+incompatible
 )
 
-require golang.org/x/text v0.8.0 // indirect
+require k8s.io/klog/v2 v2.100.1
+
+require (
+	github.com/go-logr/logr v1.2.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
+)
