@@ -19,17 +19,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	fs := afero.NewOsFs()
-	store, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
+	store, err := certstore.NewCertStore(fs, "/tmp/DIY-k8s-extended-apiserver")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	err = store.NewCA("apiserver")
+	err = store.NewCA("database")
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	serverCert, serverKey, err := store.NewServerCertPair(cert.AltNames{
-		IPs: []net.IP{net.ParseIP("127.0.0.1")},
+		IPs: []net.IP{net.ParseIP("127.0.0.2")},
 	})
 	if err != nil {
 		log.Fatalln(err)
@@ -40,18 +40,18 @@ func main() {
 	}
 
 	clientCert, clientKey, err := store.NewClientCertPair(cert.AltNames{
-		DNSNames: []string{"john"},
+		DNSNames: []string{"jane"},
 	})
 	if err != nil {
 		log.Fatalln(err)
 	}
-	err = store.Write("john", clientCert, clientKey)
+	err = store.Write("jane", clientCert, clientKey)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	cfg := server.Config{
-		Address: "127.0.0.1:8443",
+		Address: "127.0.0.2:8443",
 		CACertFiles: []string{
 			store.CertFile("ca"),
 		},
@@ -61,7 +61,7 @@ func main() {
 	srv := server.NewGenericServer(cfg)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/core/{resource}", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/database/{resource}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "Resource: %v\n", vars["resource"])
