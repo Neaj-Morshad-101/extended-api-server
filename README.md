@@ -15,6 +15,7 @@ listening on 127.0.0.1:8443
 `export APISERVER_ADDR=127.0.0.1:8443`
 
 `$ curl -k https://${APISERVER_ADDR}/core/pods`
+
 Resource: pods
 
 
@@ -40,9 +41,6 @@ forwarding request to https://127.0.0.2:8443/database/postgres
 
 ## Terminal 3
 `$ go run database-apiserver/main.go --receive-proxy-request=true`
-
-
-
 
 listening on 127.0.0.2:8443
 
