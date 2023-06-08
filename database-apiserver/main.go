@@ -122,6 +122,7 @@ func main() {
 				src = "X-Remote-User"
 			}
 		}
+
 		vars := mux.Vars(r)
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "Resource: %v requested by user[%s]=%s\n", vars["resource"], src, user)

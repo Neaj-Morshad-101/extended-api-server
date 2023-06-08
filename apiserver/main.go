@@ -36,7 +36,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	serverCert, serverKey, err := store.NewServerCertPair(cert.AltNames{
 		IPs: []net.IP{net.ParseIP("127.0.0.1")},
 	})
@@ -47,7 +46,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	clientCert, clientKey, err := store.NewClientCertPair(cert.AltNames{
 		DNSNames: []string{"john"},
 	})
@@ -61,6 +59,10 @@ func main() {
 
 	// ---------------------------------------------------------
 	rhStore, err := certstore.NewCertStore(fs, "/tmp/extended-api-server")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	err = rhStore.InitCA("requestheader")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -84,20 +86,16 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	// ---------------------------------
 
 	// -----------------------------
-
 	easCACertPool := x509.NewCertPool()
 
 	if proxy {
 		easStore, err := certstore.NewCertStore(fs, "tmp/extended-api-server")
-
 		if err != nil {
 			log.Fatalln(err)
 		}
-
 		err = easStore.LoadCA("database")
 		if err != nil {
 			log.Fatalln(err)
