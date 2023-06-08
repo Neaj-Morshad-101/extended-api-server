@@ -40,6 +40,10 @@ forwarding request to https://127.0.0.2:8443/database/postgres
 
 ## Terminal 3
 `$ go run database-apiserver/main.go --receive-proxy-request=true`
+
+
+
+
 listening on 127.0.0.2:8443
 
 ## Terminal 2
