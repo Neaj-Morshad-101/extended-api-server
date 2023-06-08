@@ -75,7 +75,7 @@ curl: (35) error:14094412:SSL routines:ssl3_read_bytes:sslv3 alert bad certifica
 $ curl -k https://${EAS_ADDR}/database/postgres
 Resource: postgres requested by user[-]=system:anonymous
 
--------------------------------------
+```
 
 ## Resources: 
 https://www.youtube.com/watch?v=pTIwy6fpxwY&t=2s&ab_channel=AppsCodeInc.
@@ -91,7 +91,3 @@ https://kubernetes.io/docs/tasks/extend-kubernetes/configure-aggregation-layer/
 
 https://medium.com/@vanSadhu/kubernetes-api-aggregation-setup-nuts-bolts-733fef22a504
 
--------------------------------------
-
-
--------------------------------------
